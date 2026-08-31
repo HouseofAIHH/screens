@@ -191,23 +191,44 @@ zwei Screens sind, ist ein Pi weniger Aufwand als eine Flottenverwaltung.
 
 **Schritt 5: Titelbilder in den eigenen Speicher**, siehe Abschnitt 2.
 
-## 6. Der QR-Code auf jeder Karte
+## 6. Die QR-Codes auf der Karte
 
-Ein Code kann nur eine Adresse tragen, gewünscht sind aber alle Kanäle einer
-Person und die Website ihrer Firma. Deshalb zeigt er nicht auf LinkedIn,
-sondern auf `/m/<name>` - eine kleine Seite auf derselben Domain, die dieselbe
-API lädt und alles auflistet, was die Karte nur andeutet. Das braucht keinen
-Server: die Seite ist Teil desselben Builds, und der Schlüssel gilt für die
-Domain, von der sie kommt.
+Jeder Kanal ist ein eigener Code, und er traegt genau die Adresse, die im
+Portal hinterlegt ist. Kein Zwischenschritt, keine eigene Seite: wer LinkedIn
+scannt, landet auf LinkedIn. GitHub steht in D1 als Benutzername, den Link
+baut die API - hier kommt also auch schon eine fertige Adresse an.
 
-Der Name im Pfad statt einer id, weil die API keine ids herausgibt und ein
-lesbarer Link im Browserverlauf mehr wert ist als ein Hash. Wer sein
-öffentliches Profil abschaltet, dessen Seite sagt genau das.
+Zwei Entscheidungen haengen daran, ob man den Code vom Monitor tatsaechlich
+abfotografieren kann. Beide sind nachgerechnet, nicht geschaetzt:
 
-Weiß hinterlegt und mit Ruhezone: auf dunklem Grund scheitern viele Kameras,
-und ein Code, den niemand scannt, ist nur ein Muster.
+**Fehlerkorrektur M statt Q.** Eine lange LinkedIn-Adresse braucht bei Q
+37x37 Module, bei M nur 33x33. Dieselbe Kachel wird damit von 1,84 auf 2,06
+Pixel je Modul groesser. Q waere noetig gewesen, um ein Markenzeichen in die
+Mitte zu legen - das steht jetzt als Monogramm darunter und kostet nichts.
 
-## 7. Ideen, bewusst noch nicht gebaut
+**Die Kachel waechst, wenn es weniger Kanaele sind.** Ein Blick in die
+Datenbank: die meisten Mitglieder pflegen nur LinkedIn, manche zusaetzlich
+GitHub, vier Kanaele hat niemand. Also bekommt der haeufige Fall die grosse
+Kachel:
+
+| Karte  | Kanaele | Kachel | Pixel je Modul |
+| ------ | ------- | ------ | -------------- |
+| gross  | 1 bis 2 | 88 px  | 2,67           |
+| gross  | 3 bis 4 | 72 px  | 2,18           |
+| klein  | 1 bis 2 | 72 px  | 2,18           |
+| klein  | 3 bis 4 | 60 px  | 1,82           |
+
+Diese Zahlen gelten fuer die laengste LinkedIn-Adresse im Bestand; kuerzere
+liegen besser. Was fehlt, ist die Probe am echten Geraet: ob 2,18 aus einem
+Meter Entfernung reicht, sagt keine Rechnung, sondern ein Handy vor dem
+Monitor. Reicht es nicht, gibt es zwei Hebel - nur den ersten Kanal je Karte
+zeigen, oder die Karten hoeher machen.
+
+Ein Nebeneffekt, den man kennen sollte: sobald `traction` dazukommt, wird es
+auf der grossen Karte eng. Die Textspalte beschneidet dann, statt ueber den
+Kartenrand zu laufen. Wenn es soweit ist, gehoert die Karte neu eingeteilt.
+
+## 7. Ideen, bewusst noch nicht gebaut## 7. Ideen, bewusst noch nicht gebaut
 
 Eine GitHub-Heatmap der Community gäbe es als Endpunkt bereits. Ein dritter
 Screen mit Kennzahlen aus `/stats` wäre eine Stunde Arbeit. Ein Screen, der

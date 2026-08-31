@@ -40,19 +40,6 @@ export function buildCards(members: Member[]): Card[] {
   return [...byCompany.values(), ...solo];
 }
 
-/* Die Adresse hinter dem QR-Code. Aus dem Namen, damit sie sprechend ist und
-   ohne eine id auskommt, die die API gar nicht herausgibt. */
-export function slugify(name: string): string {
-  return name.toLowerCase()
-    .replace(/ä/g, "ae").replace(/ö/g, "oe").replace(/ü/g, "ue").replace(/ß/g, "ss")
-    .normalize("NFD").replace(/[\u0300-\u036f]/g, "")
-    .replace(/[^a-z0-9]+/g, "-")
-    .replace(/^-+|-+$/g, "");
-}
-
-export const findBySlug = <T extends { name: string }>(people: T[], slug: string): T | undefined =>
-  people.find((p) => slugify(p.name) === slug);
-
 export const pageCount = (cards: number): number =>
   Math.max(1, Math.ceil(cards / PER_PAGE));
 
