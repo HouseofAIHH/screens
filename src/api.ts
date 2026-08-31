@@ -17,6 +17,13 @@ export interface Member {
   company: string | null;
   tier: string | null;
   title: string | null;
+  /* Noch nicht in der API, aber im Design vorgesehen. Optional getippt, damit
+     der Screen die Felder in dem Moment zeigt, in dem das Portal sie liefert -
+     ohne dass hier noch einmal jemand Hand anlegen muss. Siehe PLAN.md. */
+  photo_url?: string | null;
+  company_logo_url?: string | null;
+  company_tagline?: string | null;
+  traction?: string | null;
   socials: {
     linkedin: string | null; instagram: string | null;
     tiktok: string | null; twitter: string | null; github: string | null;

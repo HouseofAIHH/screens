@@ -77,7 +77,8 @@ Luma  --nächtlicher Abgleich-->  Worker + D1  --/api/public/v1/events-->  Scree
 
 ## 3. Der Stack, und warum er so klein ist
 
-**Vite plus React plus TypeScript.** Nichts darüber hinaus.
+**Vite plus React plus TypeScript.** Dazu Tailwind und ein Icon-Paket, sonst
+nichts.
 
 Ein Screen hat keine Nutzer, keine Formulare, keine Anmeldung und keine
 Suchmaschine, die ihn finden muss. Damit fällt der Grund für ein Framework wie
@@ -90,22 +91,30 @@ einzigen Grund: `npm install` und starten, danach speichert man und sieht die
 Änderung sofort auf dem Bildschirm. Für Beitragende, die abends eine Stunde
 Zeit haben, ist das der Unterschied zwischen mitmachen und nicht mitmachen.
 
-**Tailwind** ist die einzige weitere Abhängigkeit. Sie kostet eine Zeile in der
-Vite-Konfiguration und spart, dass jeder Beitragende sich eine eigene
-CSS-Struktur ausdenkt. Die Farben stehen als Variablen in `src/styles.css`, an
-genau einer Stelle.
+**Zwei weitere Abhängigkeiten, beide begründet.** Tailwind kostet eine Zeile in
+der Vite-Konfiguration und spart, dass jeder Beitragende sich eine eigene
+CSS-Struktur ausdenkt; die Farben stehen als Variablen in `src/styles.css`, an
+genau einer Stelle, und es sind dieselben wie im Portal.
+
+`react-icons` liefert die vier Markenzeichen der Socials. Die wären der
+klassische Fall für "das zeichne ich schnell selbst", und genau das wäre falsch:
+ein aus dem Gedächtnis nachgezogenes LinkedIn- oder GitHub-Logo ist erkennbar
+schief. Gewählt wurde die Font-Awesome-Familie, weil alle vier Marken aus einer
+Hand kommen und damit gleich aussehen. Sie kostet gebaut 14 kB.
 
 **Kein Router.** `App.tsx` liest `window.location.pathname` und entscheidet
 zwischen zwei Ansichten. Fünf Zeilen statt einer Abhängigkeit. Wenn der dritte
 oder vierte Screen kommt, bleibt das immer noch fünf Zeilen.
 
-**Keine Zustandsverwaltung.** Zwei Hooks in `src/api.ts` reichen: einer holt
-und pollt, einer blättert durch lange Listen.
+**Keine Zustandsverwaltung.** `usePoll` in `src/api.ts` holt und pollt, ein
+Zähler in der Wand treibt die Rotation. Mehr braucht eine Seite nicht, die
+niemand bedient.
 
-Was bewusst nicht drin ist: Tests. Hier hängt kein Geld dran und keine
-Datenbank, und ein kaputter Screen fällt binnen Sekunden auf. Der Typcheck im
-Build ist die Absicherung, die das Verhältnis von Aufwand zu Risiko trifft.
-Sobald hier Logik entsteht, die man nicht mehr ansieht, kehrt sich das um.
+**Getestet wird das, was man nicht ansieht.** Ob eine Karte hübsch ist, sieht
+man in zwei Sekunden auf dem Bildschirm; ob nach sieben Seiten wirklich jede
+Person einmal in einem Großslot stand, sieht man nicht. Deshalb liegt genau
+diese Rechnung ohne React in `src/lib/wall.ts` und hat sechs Tests daneben.
+`npm test`, keine Abhängigkeit, Node führt das TypeScript direkt aus.
 
 ## 4. Wie die Screens mit der API umgehen
 
@@ -127,13 +136,27 @@ fragen bringt keine neueren Daten.
 
 ## 5. Was noch fehlt
 
-**Schritt 1, im Portal: Profilbilder in `/members`.** Mitglieder laden im
-Portal ein Bild hoch und stimmen dabei der Anzeige auf der Community-Wand zu.
-Die öffentliche API gibt dieses Bild bisher nicht heraus: `PublicMember` kennt
-Name, Firma, Tier, Titel und Socials, kein Bild. Bis das Feld da ist, trägt das
-Monogramm die Kachel. Zu tun im Portal-Repo: `photo_url` in `contracts.ts`
-ergänzen, in `getMembers` füllen, aber nur bei gesetztem Einverständnis, und in
-`openapi.ts` beschreiben.
+**Schritt 1, im Portal: vier Felder in `/members`.** Die Karte aus dem Design
+zeigt Foto, Name, Rolle, Firmenlogo, Kurzbeschreibung und die Traction der
+Woche. Die API liefert davon Name, Rolle und Firmenname. Es fehlen:
+
+| Feld                | Woher                                   | Ohne das Feld                    |
+| ------------------- | --------------------------------------- | -------------------------------- |
+| `photo_url`         | liegt im Portal, nur nicht öffentlich   | Initialen-Monogramm              |
+| `company_logo_url`  | liegt im Portal, nur nicht öffentlich   | Firmen-Monogramm                 |
+| `company_tagline`   | neu, ein Satz je Unternehmen            | Zeile entfällt                   |
+| `traction`          | neu, ein Satz je Woche, wird gepflegt   | Block entfällt ganz              |
+
+Die ersten beiden laden Mitglieder längst hoch und stimmen dabei der Anzeige
+zu, sie stehen nur nicht in `PublicMember`. Zu tun im Portal-Repo: Felder in
+`contracts.ts` ergänzen, in `getMembers` füllen und dabei den Haken prüfen, in
+`openapi.ts` beschreiben. Der Screen kennt sie bereits als optionale Felder und
+zeigt sie in dem Moment, in dem sie ankommen.
+
+`traction` braucht zusätzlich eine Eingabe, sonst pflegt sie niemand. Am
+ehesten ein Feld im Mitglieder-Dashboard mit der Frage „Was ist diese Woche
+passiert?" - und ein Datum daneben, damit die Wand alte Sätze fallen lassen
+kann statt monatelang dieselbe Meldung zu zeigen.
 
 **Schritt 2: ein Schlüssel für die Screens.** Im Admin-Panel anlegen, Scopes
 `members` und `events`, als erlaubte Herkünfte `https://screens.house-of-ai.org`

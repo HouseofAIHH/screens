@@ -16,7 +16,8 @@ export function Events() {
   const [next, ...rest] = events;
 
   return (
-    <Frame eyebrow="Kalender" title="Als Nächstes im House" error={error}>
+    <Frame eyebrow="kalender" title={<>Als Nächstes <span className="text-accent-soft">im House.</span></>}
+      footerLeft="house-of-ai.org/events" error={error}>
       {loading ? (
         <p className="font-mono text-mute">lädt…</p>
       ) : !next ? (

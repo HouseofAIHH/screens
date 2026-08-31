@@ -1,16 +1,22 @@
 @import "tailwindcss";
 
-/* Die Farben des House. Ein Screen haengt in einem Raum mit gedaempftem
-   Licht - deshalb dunkler Grund und nur ein Akzent, sonst flimmert die Wand. */
+/* Dieselben Werte wie src/styles/global.css im Portal-Repo, damit Screen und
+   Website nicht auseinanderlaufen. Wer hier eine Farbe aendert, aendert sie
+   dort mit - sonst haengen zwei Haeuser nebeneinander an der Wand. */
 @theme {
-  --color-ground: #0a0a0f;
-  --color-panel: #131320;
-  --color-line: #26263a;
-  --color-ink: #f4f4f7;
-  --color-mute: #8b8ba3;
+  --color-ground: #09090b;
+  --color-ink: #fafafa;
+  --color-ink-soft: #e4e4e7;
+  --color-body: #d4d4d8;
+  --color-mute: #a1a1aa;
+  --color-dim: #71717a;
+  --color-faint: #52525b;
   --color-accent: #a855f7;
-  --font-sans: "Inter", system-ui, sans-serif;
-  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+  --color-accent-soft: #c084fc;
+  --color-accent-pale: #d8b4fe;
+
+  --font-sans: "Inter", ui-sans-serif, -apple-system, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
 }
 
 html, body, #root { height: 100%; }
