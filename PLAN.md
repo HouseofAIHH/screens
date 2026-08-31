@@ -143,10 +143,16 @@ gespeichert.
 
 **Schritt 3: Cloudflare Pages.** Dasselbe Konto wie der Worker. Repo verbinden,
 Build-Befehl `npm run build`, Ausgabeverzeichnis `dist`, die beiden
-`VITE_`-Variablen als Umgebungsvariablen hinterlegen. Danach bekommt jeder Pull
-Request automatisch eine eigene Vorschau-URL, und genau das macht das
-Mitarbeiten praktisch: eine Änderung lässt sich auf dem echten Screen ansehen,
-bevor sie gemerged wird.
+`VITE_`-Variablen als Umgebungsvariablen hinterlegen.
+
+Eine Falle steckt darin: Pages gibt jedem Deployment eine eigene Adresse aus
+einem zufälligen Präfix, und die API vergleicht Herkünfte exakt, ohne
+Platzhalter. Eine solche Vorschau bekommt also keine Daten. Der Ausweg ohne
+Wildcard, die es hier bewusst nicht gibt: ein fester Branch `preview`, dessen
+Alias `https://preview.hoai-screens.pages.dev` einmal am Schlüssel hinterlegt
+wird. Wer eine Änderung auf dem echten Screen sehen will, schiebt sie dorthin.
+Das kostet einen Push und erhält die Regel, die den Schlüssel im Browser
+überhaupt erst tragbar macht.
 
 **Schritt 4: die Geräte.** Ein Raspberry Pi 5 pro Screen, Chromium im
 Kiosk-Modus, die URL fest hinterlegt. Rund 90 Euro, lautlos, und weil es ein
