@@ -1,0 +1,25 @@
+@import "tailwindcss";
+
+/* Die Farben des House. Ein Screen haengt in einem Raum mit gedaempftem
+   Licht - deshalb dunkler Grund und nur ein Akzent, sonst flimmert die Wand. */
+@theme {
+  --color-ground: #0a0a0f;
+  --color-panel: #131320;
+  --color-line: #26263a;
+  --color-ink: #f4f4f7;
+  --color-mute: #8b8ba3;
+  --color-accent: #a855f7;
+  --font-sans: "Inter", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+}
+
+html, body, #root { height: 100%; }
+body {
+  margin: 0;
+  background: var(--color-ground);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  /* Ein Screen wird nicht bedient. */
+  cursor: none;
+  overflow: hidden;
+}
