@@ -9,6 +9,7 @@
    Traction-Block entfaellt ganz, statt leer dazustehen. Siehe PLAN.md. */
 import type { Card } from "../lib/wall";
 import { Socials } from "./Socials";
+import { MemberQr } from "./MemberQr";
 
 const initials = (name: string) =>
   name.split(/\s+/).filter(Boolean).slice(0, 2).map((w) => w[0]).join("").toUpperCase();
@@ -94,11 +95,11 @@ export function MemberCardLarge({ card }: { card: Card }) {
   const person = card.people[0]!;
 
   return (
-    <div className={`${CARD_SHELL} col-span-2 flex`}>
+    <div className={`${CARD_SHELL} relative col-span-2 flex`}>
       <Photo card={card} size="l" />
       <div className="w-px shrink-0 self-stretch bg-white/[0.08]" />
 
-      <div className="flex min-w-0 flex-1 flex-col justify-between px-[31px] py-[22px]">
+      <div className="flex min-w-0 flex-1 flex-col justify-between py-[22px] pr-[130px] pl-[31px]">
         <div className="flex flex-col gap-[5px]">
           <p className="truncate text-[30px] leading-[1.15] font-semibold tracking-[-0.6px] text-ink">{name}</p>
           {role ? (
@@ -132,6 +133,10 @@ export function MemberCardLarge({ card }: { card: Card }) {
           <Socials socials={person.socials} size="l" />
         </div>
       </div>
+
+      <div className="absolute right-[24px] bottom-[24px]">
+        <MemberQr name={person.name} size={78} />
+      </div>
     </div>
   );
 }
@@ -141,7 +146,7 @@ export function MemberCardSmall({ card }: { card: Card }) {
   const person = card.people[0]!;
 
   return (
-    <div className={`${CARD_SHELL} flex flex-col justify-between px-[24px] py-[26px]`}>
+    <div className={`${CARD_SHELL} relative flex flex-col justify-between px-[24px] py-[26px]`}>
       <div className="flex w-full items-center gap-[14px]">
         <Photo card={card} size="s" />
         <div className="flex min-w-0 flex-1 flex-col gap-[3px]">
@@ -167,7 +172,7 @@ export function MemberCardSmall({ card }: { card: Card }) {
       </div>
 
       {person.traction ? (
-        <div className="flex w-full flex-col gap-[6px]">
+        <div className="flex w-full flex-col gap-[6px] pr-[76px]">
           <div className="flex items-center gap-[8px]">
             <div className="h-[2px] w-[14px] shrink-0 bg-accent" />
             <p className="font-mono text-[10px] leading-[1.4] tracking-[1.4px] text-accent uppercase">diese woche</p>
@@ -177,6 +182,10 @@ export function MemberCardSmall({ card }: { card: Card }) {
       ) : null}
 
       <Socials socials={person.socials} size="s" />
+
+      <div className="absolute right-[24px] bottom-[24px]">
+        <MemberQr name={person.name} size={54} />
+      </div>
     </div>
   );
 }

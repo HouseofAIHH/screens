@@ -1,7 +1,7 @@
 /* node --experimental-strip-types --test test/wall.test.mjs */
 import test from "node:test";
 import assert from "node:assert/strict";
-import { buildCards, pageCards, pageCount, largeSlot, PER_PAGE } from "../src/lib/wall.ts";
+import { buildCards, pageCards, pageCount, largeSlot, slugify, findBySlug, PER_PAGE } from "../src/lib/wall.ts";
 
 const person = (name, company = null) => ({
   name, company, tier: null, title: null,
@@ -54,4 +54,17 @@ test("der Grossslot wandert und ist nach drei Seiten ueberall gewesen", () => {
 test("ohne Mitglieder faellt nichts um", () => {
   assert.deepEqual(pageCards([], 0, 0), []);
   assert.equal(pageCount(0), 1);
+});
+
+test("der Slug traegt Umlaute und Bindestriche heil durch", () => {
+  assert.equal(slugify("Jan Kleine-Klatte"), "jan-kleine-klatte");
+  assert.equal(slugify("Björn Müller"), "bjoern-mueller");
+  assert.equal(slugify("  Yash   Luthra  "), "yash-luthra");
+  assert.equal(slugify("pickz.ai"), "pickz-ai");
+});
+
+test("aus dem Slug wird wieder die Person", () => {
+  const people = [person("Dominika Oliinyk"), person("Martin Auer")];
+  assert.equal(findBySlug(people, "martin-auer").name, "Martin Auer");
+  assert.equal(findBySlug(people, "gibt-es-nicht"), undefined);
 });

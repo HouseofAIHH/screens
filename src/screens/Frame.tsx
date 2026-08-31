@@ -50,7 +50,9 @@ export function Frame({ eyebrow, title, subline, footerLeft, progress, pager, er
   const now = useClock();
 
   return (
-    <div className="flex h-full w-full items-center justify-center overflow-hidden bg-ground">
+    /* cursor-none und overflow-hidden stehen hier und nicht am Body: die
+       Seite hinter dem QR-Code wird sehr wohl bedient und gescrollt. */
+    <div className="flex h-full w-full cursor-none items-center justify-center overflow-hidden bg-ground">
       <div style={{ width: W, height: H, transform: `scale(${scale})` }}
         className="relative shrink-0 origin-center">
 

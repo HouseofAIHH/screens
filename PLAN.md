@@ -147,8 +147,9 @@ Woche. Die API liefert davon Name, Rolle und Firmenname. Es fehlen:
 | `company_tagline`   | neu, ein Satz je Unternehmen            | Zeile entfällt                   |
 | `traction`          | neu, ein Satz je Woche, wird gepflegt   | Block entfällt ganz              |
 
-Die ersten beiden laden Mitglieder längst hoch und stimmen dabei der Anzeige
-zu, sie stehen nur nicht in `PublicMember`. Zu tun im Portal-Repo: Felder in
+`company_tagline` und `company_website` sind seit dem 31. August da: Firmen
+pflegen beide im Dashboard. Die zwei Bilder laden Mitglieder längst hoch und
+stimmen dabei der Anzeige zu, sie stehen nur nicht in `PublicMember`. Zu tun im Portal-Repo: Felder in
 `contracts.ts` ergänzen, in `getMembers` füllen und dabei den Haken prüfen, in
 `openapi.ts` beschreiben. Der Screen kennt sie bereits als optionale Felder und
 zeigt sie in dem Moment, in dem sie ankommen.
@@ -190,7 +191,23 @@ zwei Screens sind, ist ein Pi weniger Aufwand als eine Flottenverwaltung.
 
 **Schritt 5: Titelbilder in den eigenen Speicher**, siehe Abschnitt 2.
 
-## 6. Ideen, bewusst noch nicht gebaut
+## 6. Der QR-Code auf jeder Karte
+
+Ein Code kann nur eine Adresse tragen, gewünscht sind aber alle Kanäle einer
+Person und die Website ihrer Firma. Deshalb zeigt er nicht auf LinkedIn,
+sondern auf `/m/<name>` - eine kleine Seite auf derselben Domain, die dieselbe
+API lädt und alles auflistet, was die Karte nur andeutet. Das braucht keinen
+Server: die Seite ist Teil desselben Builds, und der Schlüssel gilt für die
+Domain, von der sie kommt.
+
+Der Name im Pfad statt einer id, weil die API keine ids herausgibt und ein
+lesbarer Link im Browserverlauf mehr wert ist als ein Hash. Wer sein
+öffentliches Profil abschaltet, dessen Seite sagt genau das.
+
+Weiß hinterlegt und mit Ruhezone: auf dunklem Grund scheitern viele Kameras,
+und ein Code, den niemand scannt, ist nur ein Muster.
+
+## 7. Ideen, bewusst noch nicht gebaut
 
 Eine GitHub-Heatmap der Community gäbe es als Endpunkt bereits. Ein dritter
 Screen mit Kennzahlen aus `/stats` wäre eine Stunde Arbeit. Ein Screen, der

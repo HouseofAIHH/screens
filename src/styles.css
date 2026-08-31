@@ -25,7 +25,4 @@ body {
   background: var(--color-ground);
   color: var(--color-ink);
   font-family: var(--font-sans);
-  /* Ein Screen wird nicht bedient. */
-  cursor: none;
-  overflow: hidden;
 }
