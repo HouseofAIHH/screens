@@ -58,12 +58,9 @@ export function Frame({ eyebrow, title, subline, footerLeft, progress, pager, er
 
         <header className="absolute top-[56px] left-[64px] flex h-[42px] w-[1792px] items-center justify-between">
           <div className="flex items-center gap-[14px]">
-            <p className="font-mono text-[24px] font-bold text-ink">
-              <span className="text-accent">./</span>house-of.ai
+            <p className="font-mono text-[24px] font-medium text-ink">
+              house of ai <span className="text-dim">/</span> <span className="text-mute">hamburg</span>
             </p>
-            <div className="rounded-[6px] border border-accent/[0.32] bg-accent/[0.12] px-[10px] py-[5px]">
-              <p className="font-mono text-[11px] font-bold tracking-[1.1px] text-accent-pale uppercase">Hamburg</p>
-            </div>
           </div>
           <time className="font-mono text-[24px] font-medium tracking-[0.48px] text-ink-soft tabular-nums">
             {now.toLocaleTimeString("de-DE", { hour: "2-digit", minute: "2-digit" })}
@@ -73,7 +70,7 @@ export function Frame({ eyebrow, title, subline, footerLeft, progress, pager, er
         <p className="absolute top-[150px] left-[64px] font-mono text-[15px] font-medium tracking-[2.4px] text-accent uppercase">
           {eyebrow}
         </p>
-        <h1 className="absolute top-[184px] left-[64px] text-[50px] leading-[1.15] font-semibold tracking-[-1.5px] text-ink">
+        <h1 className="absolute top-[184px] left-[64px] font-serif text-[50px] leading-[1.15] font-bold tracking-[-1.5px] text-ink">
           {title}
         </h1>
         {subline ? (
@@ -97,7 +94,7 @@ export function Frame({ eyebrow, title, subline, footerLeft, progress, pager, er
             <div className="flex items-center gap-[16px]">
               <div className="flex items-center gap-[6px]">
                 {Array.from({ length: pager.pages }, (_, i) => (
-                  <div key={i} className={`h-[3px] rounded-[2px] transition-all duration-500 ${
+                  <div key={i} className={`h-[3px] transition-all duration-500 ${
                     i === pager.page ? "w-[24px] bg-accent" : "w-[12px] bg-white/[0.16]"}`} />
                 ))}
               </div>

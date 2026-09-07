@@ -46,7 +46,7 @@ export function Socials({ socials, size }: { socials: Member["socials"]; size: "
     <div className={`flex shrink-0 items-end ${size === "l" ? "gap-[12px]" : "gap-[8px]"}`}>
       {present.map(({ key, mark }) => (
         <div key={key} className="flex shrink-0 flex-col items-center gap-[4px]">
-          <div className="rounded-[8px] bg-white p-[5px] leading-[0]">
+          <div className="bg-white p-[5px] leading-[0]">
             <QRCodeSVG value={socials[key]!} size={tile} level="M" marginSize={0}
               bgColor="#ffffff" fgColor="#09090b" />
           </div>

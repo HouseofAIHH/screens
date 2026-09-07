@@ -24,7 +24,7 @@ export function Events() {
         <p className="text-3xl text-mute">Gerade nichts geplant. Schau auf lu.ma/houseofai.</p>
       ) : (
         <div className="flex h-full flex-col gap-6">
-          <article className="rounded-2xl border border-accent/40 bg-accent/10 p-10">
+          <article className="border border-accent/40 bg-accent/10 p-10">
             <p className="font-mono text-xl text-accent">
               {day(next.starts_at)} · {time(next.starts_at)}
               {next.ends_at ? `–${time(next.ends_at)}` : ""}
@@ -36,7 +36,7 @@ export function Events() {
           <div className="grid min-h-0 flex-1 grid-cols-2 content-start gap-4">
             {rest.map((e) => (
               <article key={`${e.title}-${e.starts_at}`}
-                className="rounded-xl border border-line bg-panel p-6">
+                className="border border-line bg-panel p-6">
                 <p className="font-mono text-base text-mute">
                   {day(e.starts_at)} · {time(e.starts_at)}
                 </p>

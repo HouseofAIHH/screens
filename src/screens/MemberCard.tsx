@@ -13,17 +13,15 @@ import { Socials } from "./Socials";
 const initials = (name: string) =>
   name.split(/\s+/).filter(Boolean).slice(0, 2).map((w) => w[0]).join("").toUpperCase();
 
-/* Zwei Verlaufsfamilien, damit die Wand nicht monoton wird. Die Wahl haengt am
-   Namen, nicht am Zufall: dieselbe Person hat bei jedem Umlauf dieselbe Kachel. */
-const TINTS = [
-  { from: "#241c2e", to: "#14121a" },
-  { from: "#1a2230", to: "#12151c" },
-];
+/* Zwei Grundtoene, damit die Wand nicht monoton wird. Die Wahl haengt am
+   Namen, nicht am Zufall: dieselbe Person hat bei jedem Umlauf dieselbe
+   Kachel. Flaechen statt Verlaeufe - die Marke kennt keinen Verlauf, und die
+   beiden alten Toene waren blau- und lilastichig gegen eine warme Rampe. */
+const TINTS = ["var(--neutral-950)", "var(--neutral-900)"];
 function tint(key: string): string {
   let h = 0;
   for (let i = 0; i < key.length; i++) h = (h * 31 + key.charCodeAt(i)) >>> 0;
-  const t = TINTS[h % TINTS.length]!;
-  return `linear-gradient(to bottom, ${t.from}, ${t.to})`;
+  return TINTS[h % TINTS.length]!;
 }
 
 /* Mehrere Menschen einer Firma teilen sich eine Karte. Dann traegt die
@@ -49,7 +47,7 @@ function Photo({ card, size }: { card: Card; size: "l" | "s" }) {
   if (url && people.length === 1) {
     return big
       ? <img src={url} alt="" className="h-full w-[300px] shrink-0 object-cover" />
-      : <img src={url} alt="" className="size-[52px] shrink-0 rounded-[12px] object-cover" />;
+      : <img src={url} alt="" className="size-[52px] shrink-0 object-cover" />;
   }
 
   /* Ohne Foto das Monogramm. Bei mehreren Gesichtern schrumpft es, damit alle
@@ -61,7 +59,7 @@ function Photo({ card, size }: { card: Card; size: "l" | "s" }) {
     <div style={{ background: tint(card.key) }}
       className={big
         ? "flex h-full w-[300px] shrink-0 flex-wrap items-center justify-center gap-x-[10px] gap-y-[4px] px-[16px]"
-        : "flex size-[52px] shrink-0 items-center justify-center rounded-[12px]"}>
+        : "flex size-[52px] shrink-0 items-center justify-center "}>
       {(big ? people : people.slice(0, 1)).map((p) => (
         <span key={p.name}
           className={`${glyph} font-mono font-bold tracking-[0.06em] text-white/[0.11]`}>
@@ -74,7 +72,7 @@ function Photo({ card, size }: { card: Card; size: "l" | "s" }) {
 
 function CompanyMark({ card, size }: { card: Card; size: "l" | "s" }) {
   const logo = card.people[0]?.company_logo_url;
-  const box = size === "l" ? "size-[36px] rounded-[9px]" : "size-[26px] rounded-[7px]";
+  const box = size === "l" ? "size-[36px] " : "size-[26px] ";
   if (logo) return <img src={logo} alt="" className={`${box} shrink-0 object-contain`} />;
   return (
     <div className={`${box} flex shrink-0 items-center justify-center border border-white/[0.13] bg-white/[0.07]`}>
@@ -86,8 +84,8 @@ function CompanyMark({ card, size }: { card: Card; size: "l" | "s" }) {
 }
 
 const CARD_SHELL =
-  "h-[301px] overflow-hidden rounded-[14px] border border-white/[0.08] " +
-  "bg-gradient-to-b from-white/[0.05] to-white/[0.01]";
+  "h-[301px] overflow-hidden border border-white/[0.08] " +
+  "from-white/[0.05] to-white/[0.01]";
 
 export function MemberCardLarge({ card }: { card: Card }) {
   const { name, role } = heading(card);
@@ -121,7 +119,7 @@ export function MemberCardLarge({ card }: { card: Card }) {
         </div>
 
         {person.traction ? (
-          <div className="flex flex-col gap-[7px] rounded-r-[8px] border-l-2 border-accent/55 bg-white/[0.03] px-[16px] pt-[14px] pb-[15px]">
+          <div className="flex flex-col gap-[7px] -[8px] border-l-2 border-accent/55 bg-white/[0.03] px-[16px] pt-[14px] pb-[15px]">
             <p className="font-mono text-[11px] leading-[1.4] tracking-[1.54px] text-accent uppercase">diese woche</p>
             <p className="line-clamp-2 text-[16px] leading-[1.45] text-body">{person.traction}</p>
           </div>
